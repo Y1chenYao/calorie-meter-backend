@@ -216,7 +216,7 @@ Response
   
 ## Get tag by id  
 
-	GET /tags/{id}/  
+	GET /tags/{tag_id}/  
 
 Response  
 
@@ -241,6 +241,7 @@ Response:
 
 Return the food after adding the tag. 
 
+	<HTTP STATUS CODE 200>
 	{
 	    "id": 2,
 	    "name": "ice cream",
