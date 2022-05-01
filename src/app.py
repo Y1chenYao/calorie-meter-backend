@@ -3,14 +3,13 @@ import json
 from db import db
 from flask import Flask
 from flask import request
-from db import Course
-from db import User
-from db import Assignment
+from db import Food
+from db import Tag
 
 
 # define db filename
 app = Flask(__name__)
-db_filename = "cms.db"
+db_filename = "calorie.db"
 
 # setup config
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///%s" % db_filename
@@ -36,10 +35,10 @@ def failure_response(message, code=404):
 # ------------------------------------------------------
 
 @app.route("/")
-@app.route("/api/courses/")
+@app.route("/api/foods/")
 def get_courses():
     # Endpoint for getting all courses
-    return success_response({"courses": [t.serialize() for t in Course.query.all()]})
+    return success_response({"foods": [t.serialize() for t in Food.query.all()]})
 
 
 @app.route("/api/courses/", methods=["POST"])
@@ -150,5 +149,5 @@ def add_assignment_to_course(course_id):
 
 
 if __name__ == "__main__":
-    # I don't know why but 0.0.0.0 doesn't work on my windows PC
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)
+    # app.run(host="0.0.0.0", port=5000, debug=True)

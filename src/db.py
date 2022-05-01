@@ -33,7 +33,7 @@ class Food(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "description": self.code,
+            "description": self.description,
             "calorie": self.calorie,
             "image": self.image,
             "tags": [t.simple_serialize() for t in self.tags],
@@ -43,7 +43,7 @@ class Food(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "description": self.code,
+            "description": self.description,
             "calorie": self.calorie,
             "image": self.image
         }
