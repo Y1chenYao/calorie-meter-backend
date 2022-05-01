@@ -1,47 +1,174 @@
-Implemented db.py app.py
-
-
-Tested via postman
-
 # API Specification
-
-## Get all foods
-> __GET__ /foods/
+## Get all foods  
+	GET /foods/ 
+ 
 Response:
-Adding a food to the database
-POST /foods/
-Request:
-{
-    "name": "ice cream",
-    "description": "vanilla Cornell Dairy",
-    "calories": 40
-}
-Response:
-<HTTP STATUS CODE 201>
-{
-    "id": 1,
-    "name": "ice cream",
-    "description": "vanilla Cornell Dairy",
-    "calories": 40,
-    "tags": []
-}
-Note: For request body, “name” must be nonempty; “description” must be nonempty; “calories” must be nonnegative integer. If the request is illegal, respond with an error message with status code 400.
 
-Get Food by id
-GET /foods/{food_id}/
+	{
+	    "foods": [
+	        {
+	            "id": 1,
+	            "name": "ice cream",
+	            "description": "Cornell Dairy",
+	            "calories": 34,
+	            "tags": [
+	                {
+	                    "id": 1,
+	                    "name": "sweet",
+	                    "color": "green"
+	                },
+	                {
+	                    "id": 2,
+	                    "name": "dessert",
+	                    "color": "red"
+	                }
+	            ]
+	        }, 
+	        ...
+	    ]
+	}  
 
-Note: If no food has the given id, respond with an error message.
+## Create a food  
+	POST /foods/  
+Request:  
+
+	{  
+		"name": "ice cream",  
+		"description": "vanilla Cornell Dairy",  
+		"calories": 40  
+	}  
+Response:  
+
+	<HTTP STATUS CODE 201>  
+	{  
+		"id": 1,  
+		"name": "ice cream",  
+		"description": "vanilla Cornell Dairy",  
+		"calories": 40,  
+		"tags": []  
+	}  
+>Note: In the request body, “name” must be nonempty; “description” must be nonempty; “calories” must be nonnegative integer. If the request is illegal, respond with an error message with status code 400.  
+ 
+## Get food by id  
+	GET /foods/{food_id}/  
+
+Response
+
+	<HTTP STATUS CODE 200>
+	{
+	    "id": 1,
+	    "name": "ice cream",
+	    "description": "Cornell Dairy",
+	    "calories": 34,
+	    "tags": [
+	        {
+	            "id": 1,
+	            "name": "sweet",
+	            "color": "green"
+	        },
+	        {
+	            "id": 2,
+	            "name": "dessert",
+	            "color": "red"
+	        }
+	    ]
+	}
+  
+>Note: If no food has the given id, respond with an error message.  
+  
+## Get food by name  
+	GET /foods/{food_name}/  
+ 
+ Response
+
+	{
+	    "foods": [
+	        {
+	            "id": 1,
+	            "name": "ice cream",
+	            "description": "Cornell Dairy",
+	            "calories": 34,
+	            "tags": [
+	                {
+	                    "id": 1,
+	                    "name": "sweet",
+	                    "color": "green"
+	                },
+	                {
+	                    "id": 2,
+	                    "name": "dessert",
+	                    "color": "red"
+	                }
+	            ]
+	        },
+	        {
+	            "id": 2,
+	            "name": "ice cream",
+	            "description": "Haagen Daz",
+	            "calories": 32,
+	            "tags": []
+	        }
+	    ]
+	}
+  
+ 
+>Note: Since multiple food entries are allowed to have have the same name, this route will return a list of foods. If there are no foods with the given name, return an empty list (not an error message).  
+  
+## Update food by id
+	POST /foods/{food_id}/  
 
 
-Get food by name
-GET /foods/{food_name}/
+Request
 
-Note: Return a list of foods with the given name, since multiple food entries can have the same name. If there are no foods with the given name, return an empty list (not an error message).
+	{
+	    "name": "french fries",
+	    "description": "with ketchup",
+	    "calories": 35
+	}
 
-POST /foods/{food_id}/
-Update a food by id. 
+Response
 
-Note: If any field is not specified, then does not change that field. However, will return an error message if the calories field is not a nonnegative integer.
+	{
+	    "id": 3,
+	    "name": "french fries",
+	    "description": "with ketchup",
+	    "calories": 35,
+	    "tags": []
+	}
 
-DELETE /foods/{food_id}/
-Deleting a food by id
+
+  
+>Note: If any field is not specified, then this route simply leaves that field unchanged. An error message will be returned if the calories field is not a nonnegative integer.  
+ 
+## Delete food by id
+
+	DELETE /foods/{food_id}/  
+
+Return the deleted food
+
+Response
+
+	{
+	    "id": 2,
+	    "name": "ice cream",
+	    "description": "Haagen Daz",
+	    "calories": 32,
+	    "tags": [
+	        {
+	            "id": 1,
+	            "name": "sweet",
+	            "color": "green"
+	        },
+	        {
+	            "id": 2,
+	            "name": "dessert",
+	            "color": "red"
+	        }
+	    ]
+	}
+
+## Get all tags
+
+
+
+> Written with [StackEdit](https://stackedit.io/).
