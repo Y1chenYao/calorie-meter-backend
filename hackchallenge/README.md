@@ -1,3 +1,3 @@
-Implemented   db.py app.py
+Implemented db.py app.py
 
-API Spcification written in   API_Specification.md
+API Spcification written in API_Specification.md
