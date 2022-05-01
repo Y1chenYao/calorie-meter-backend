@@ -4,6 +4,7 @@
  
 Response:
 
+	<HTTP RESPONSE CODE 200>
 	{
 	    "foods": [
 	        {
@@ -81,6 +82,7 @@ Response
  
  Response
 
+	<HTTP RESPONSE CODE 200>
 	{
 	    "foods": [
 	        {
@@ -128,6 +130,7 @@ Request
 
 Response
 
+	<HTTP RESPONSE CODE 200>
 	{
 	    "id": 3,
 	    "name": "french fries",
@@ -148,6 +151,7 @@ Return the deleted food
 
 Response
 
+	<HTTP RESPONSE CODE 200>
 	{
 	    "id": 2,
 	    "name": "ice cream",
@@ -167,8 +171,88 @@ Response
 	    ]
 	}
 
-## Get all tags
+## Get all tags  
+	GET /tags/  
+  
+  Response
 
+	<HTTP STATUS CODE 200>
+	{
+	    "tags": [
+	        {
+	            "id": 1,
+	            "name": "sweet",
+	            "color": "green"
+	        },
+	        {
+	            "id": 2,
+	            "name": "dessert",
+	            "color": "red"
+	        }
+	    ]
+	}
+  
+  
+## Create a new tag  
+	POST /tags/ 
 
+Request
 
-> Written with [StackEdit](https://stackedit.io/).
+	{
+	    "name": "dessert",
+	    "color": "red"
+	} 
+
+Response
+
+	<HTTP RESPONSE CODE 201>
+	{
+	    "id": 2,
+	    "name": "dessert",
+	    "color": "red"
+	}
+
+>Note: Return an error message is "name" or "color" field does not exist
+  
+## Get tag by id  
+
+	GET /tags/{id}/  
+
+Response  
+
+	<HTTP STATUS CODE 200>
+	{
+	    "id": 1,
+	    "name": "sweet",
+	    "color": "green"
+	}
+
+## Add tag to food  
+
+	POST /foods/{food_id}/add/  
+
+Request:  
+
+	{  
+		"tag_id": <USER INPUT>  
+	}
+
+Response:
+
+Return the food after adding the tag. 
+
+	{
+	    "id": 2,
+	    "name": "ice cream",
+	    "description": "Haagen Daz",
+	    "calories": 32,
+	    "tags": [
+	        {
+	            "id": 2,
+	            "name": "dessert",
+	            "color": "red"
+	        }
+	    ]
+	}
+
+> Note: Return an error message if "tag_id" is not given in the request body. 
