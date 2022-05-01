@@ -6,7 +6,7 @@ Tested via postman
 # API Specification
 
 ## Get all foods
-__GET__ /foods/
+> __GET__ /foods/
 Response:
 Adding a food to the database
 POST /foods/
