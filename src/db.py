@@ -6,8 +6,8 @@ db = SQLAlchemy()
 assoc_table = db.Table(
     "association",
     db.Model.metadata,
-    db.Column("food_id", db.Integer, db.ForeignKey("tag.id")),
-    db.Column("tag_id", db.Integer, db.ForeignKey("food.id"))
+    db.Column("food_id", db.Integer, db.ForeignKey("food.id")),
+    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id"))
 )
 
 
@@ -19,15 +19,14 @@ class Food(db.Model):
     calorie = db.Column(db.Integer, nullable=False)
     image = db.Column(db.String, nullable=False)
     # to be debugged
-    tags = db.relationship(
-        "Tag", secondary=assoc_table, back_populates="tags")
+    tags = db.relationship("Tag", secondary=assoc_table, back_populates="foods")
 
     def __init__(self, **kwargs):
         # initialize food object/entry
         self.name = kwargs.get("name", "")
-        self.description = kwargs.get("name", "")
-        self.image = kwargs.get("name", "")
-        self.calorie = kwargs.get("name",)
+        self.description = kwargs.get("description", "")
+        self.image = kwargs.get("image", "")
+        self.calorie = kwargs.get("calorie",)
 
     def serialize(self):
         return {
@@ -50,14 +49,13 @@ class Food(db.Model):
 
 
 class Tag(db.Model):
-    __tablename__ = "tags"
+    __tablename__ = "tag"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
 
     # Stored as a hex string
     color = db.Column(db.String, nullable=False)
-    foods = db.relationship(
-        "food", secondary=assoc_table, back_populates="tags")
+    foods = db.relationship("Food", secondary=assoc_table, back_populates="tags")
 
     def __init__(self, **kwargs):
         # initialize user object/entry

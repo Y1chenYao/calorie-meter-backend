@@ -23,12 +23,12 @@ with app.app_context():
     db.create_all()
 
 
-def success_response(data, code=200):
-    return json.dumps(data), code
+def success_response(data, description=200):
+    return json.dumps(data), description
 
 
-def failure_response(message, code=404):
-    return json.dumps({"error": message}), code
+def failure_response(message, description=404):
+    return json.dumps({"error": message}), description
 
 
 # ROUTES
@@ -36,24 +36,31 @@ def failure_response(message, code=404):
 
 @app.route("/")
 @app.route("/api/foods/")
-def get_courses():
-    # Endpoint for getting all courses
+def get_foods():
+    # Endpoint for getting all foods
+    # This endpoint has passed the test
     return success_response({"foods": [t.serialize() for t in Food.query.all()]})
 
 
-@app.route("/api/courses/", methods=["POST"])
+@app.route("/api/foods/", methods=["POST"])
 def create_course():
-    # Endpoint for creating a new course
+    # Endpoint for creating a new food
+    # This endpoint has passed the test
     body = json.loads(request.data)
-    code = body.get("code")
+    
     name = body.get("name")
-    if code is None or name is None:
+    description = body.get("description")
+    calorie = body.get("calorie")
+    image = body.get("image")
+    
+    if description is None or name is None or calorie is None or image is None:
         return failure_response("Bad request", 400)
-    new_course = Course(code=code, name=name)
-    db.session.add(new_course)
+    new_food = Food(description=description, name=name, calorie=calorie, image=image)
+    db.session.add(new_food)
     db.session.commit()
-    return success_response(new_course.serialize(), 201)
+    return success_response(new_food.serialize(), 201)
 
+#---------------------------- to be implemented
 
 @app.route("/api/courses/<int:course_id>/")
 def get_course_by_id(course_id):
