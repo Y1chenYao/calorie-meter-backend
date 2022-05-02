@@ -257,3 +257,14 @@ Return the food after adding the tag.
 	}
 
 > Note: Return an error message if "tag_id" is not given in the request body. 
+
+## Delete tag by id
+	DELETE /tags/{tag_id}/
+
+Response
+
+	{
+	    "id": 1,
+	    "name": "sweet",
+	    "color": "green"
+	}
