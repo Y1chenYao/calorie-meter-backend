@@ -151,6 +151,16 @@ def get_tag_by_id(tag_id):
         return failure_response("Tag not exist")
     return success_response(tag.serialize())
 
+@app.route("/tags/<tag_name>/")
+def get_tag_by_name(tag_name):
+    """
+    Endpoint for getting tag by name
+    Return a list of tag whose name is the same as the name given
+    If no tags are matched, return an EMPTY LIST
+    If exactly 1 tag is matched, return a LIST OF ONE ELEMENT
+    """
+    return success_response({"tags": [t.serialize() for t in Tag.query.filter_by(name=str(tag_name))]})
+
 @app.route("/foods/<int:food_id>/add/", methods=["POST"])
 def add_tag_to_food(food_id):
     """

@@ -193,6 +193,30 @@
 			"response": []
 		},
 		{
+			"name": "get tags by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:5000/tags/sweet/",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "5000",
+					"path": [
+						"tags",
+						"sweet",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "add tag to food",
 			"request": {
 				"method": "POST",
@@ -207,7 +231,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/foods/1/add/",
+					"raw": "http://localhost:5000/foods/2/add/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -215,7 +239,7 @@
 					"port": "5000",
 					"path": [
 						"foods",
-						"1",
+						"2",
 						"add",
 						""
 					]
