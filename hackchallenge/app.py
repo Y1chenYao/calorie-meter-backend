@@ -88,7 +88,7 @@ def get_food_by_name(food_name):
     return success_response({"foods": [t.serialize() for t in Food.query.filter_by(name=str(food_name))]})
 
 @app.route("/foods/<int:food_id>/", methods=["POST"])
-def update_task(food_id):
+def update_food(food_id):
     """
     Endpoint for updating a food by id
     """
@@ -142,7 +142,7 @@ def create_tag():
     return success_response(new_tag.simple_serialize(), 201)
 
 @app.route("/tags/<int:tag_id>/")
-def get_tag(tag_id):
+def get_tag_by_id(tag_id):
     """
     Endpoint for getting a tag by id
     """
@@ -169,6 +169,19 @@ def add_tag_to_food(food_id):
     food.tags.append(tag)
     db.session.commit()
     return success_response(food.serialize())
+
+@app.route("/tags/<int:tag_id>/", methods=["DELETE"])
+def delete_tag(tag_id):
+    """
+    Endpoint for deleting a tag by id
+    """
+    tag = Tag.query.filter_by(id=tag_id).first()
+    if tag is None:
+        return failure_response("Tag not exist")
+    db.session.delete(tag)
+    db.session.commit()
+    return success_response(tag.simple_serialize())
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
