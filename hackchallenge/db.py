@@ -56,7 +56,7 @@ class Tag(db.Model):
 
     def __init__(self, **kwargs):
         """
-        Initializes a Category object
+        Initializes a Tag object
         """
         self.name = kwargs.get("name", "")
         self.color = kwargs.get("color", "")
