@@ -80,6 +80,8 @@ Response
 ## Get food by name  
 	GET /foods/{food_name}/  
  
+Since multiple food entries are allowed to have have the same name, this route will return a list of foods. If there are no foods with the given name, return an empty list (not an error message). If exactly one food is matched with the given name, return a list of one element.
+ 
  Response
 
 	<HTTP RESPONSE CODE 200>
@@ -113,12 +115,9 @@ Response
 	    ]
 	}
   
- 
->Note: Since multiple food entries are allowed to have have the same name, this route will return a list of foods. If there are no foods with the given name, return an empty list (not an error message).  
-  
+   
 ## Update food by id
 	POST /foods/{food_id}/  
-
 
 Request
 
@@ -244,6 +243,35 @@ Response
 	        }
 	    ]
 	}
+
+## Get tag by name
+	GET /tags/{tag_name}/
+
+Return a list of tag whose name is the same as {tag_name}
+If no tags are matched, return an empty list
+If exactly one tag is matched, return a list of one element
+
+Response
+
+	<HTTP STATUS 200>
+	{
+	    "tags": [
+	        {
+	            "id": 1,
+	            "name": "sweet",
+	            "color": "green",
+	            "foods": [
+	                {
+	                    "id": 2,
+	                    "name": "ice cream",
+	                    "description": "Haagen Daz",
+	                    "calories": 32
+	                }
+	            ]
+	        }
+	    ]
+	}
+
 
 ## Add tag to food  
 
