@@ -80,7 +80,7 @@ Response
 ## Get food by name  
 	GET /foods/{food_name}/  
  
-Since multiple food entries are allowed to have have the same name, this route will return a list of foods. If there are no foods with the given name, return an empty list (not an error message). If exactly one food is matched with the given name, return a list of one element.
+Since multiple food entries are allowed to have have the same name, this route will return a __list__ of foods. If there are no foods with the given name, return an __empty list__ (not an error message). If exactly one food is matched with the given name, return a __list of one element__.
  
  Response
 
@@ -247,9 +247,7 @@ Response
 ## Get tag by name
 	GET /tags/{tag_name}/
 
-Return a list of tag whose name is the same as {tag_name}
-If no tags are matched, return an empty list
-If exactly one tag is matched, return a list of one element
+Return a __list__ of tag whose name is the same as {tag_name}. If no tags are matched, return __an empty list__. If exactly one tag is matched, return __a list of one element__.
 
 Response
 
