@@ -181,13 +181,22 @@ Response
 	    "tags": [
 	        {
 	            "id": 1,
-	            "name": "sweet",
-	            "color": "green"
+	            "name": "dessert",
+	            "color": "red",
+	            "foods": []
 	        },
 	        {
 	            "id": 2,
-	            "name": "dessert",
-	            "color": "red"
+	            "name": "sweet",
+	            "color": "green",
+	            "foods": [
+	                {
+	                    "id": 2,
+	                    "name": "ice cream",
+	                    "description": "Haagen Daz",
+	                    "calories": 32
+	                }
+	            ]
 	        }
 	    ]
 	}
@@ -199,17 +208,18 @@ Response
 Request
 
 	{
-	    "name": "dessert",
-	    "color": "red"
+	    "name": "sweet",
+	    "color": "green"
 	} 
 
 Response
 
 	<HTTP RESPONSE CODE 201>
 	{
-	    "id": 2,
-	    "name": "dessert",
-	    "color": "red"
+	    "id": 1,
+	    "name": "sweet",
+	    "color": "green",
+	    "foods": []
 	}
 
 >Note: Return an error message is "name" or "color" field does not exist
@@ -224,7 +234,15 @@ Response
 	{
 	    "id": 1,
 	    "name": "sweet",
-	    "color": "green"
+	    "color": "green",
+	    "foods": [
+	        {
+	            "id": 2,
+	            "name": "ice cream",
+	            "description": "Haagen Daz",
+	            "calories": 32
+	        }
+	    ]
 	}
 
 ## Add tag to food  
@@ -263,8 +281,17 @@ Return the food after adding the tag.
 
 Response
 
+	<HTTP STATUS CODE 200>
 	{
 	    "id": 1,
 	    "name": "sweet",
-	    "color": "green"
+	    "color": "green",
+	    "foods": [
+	        {
+	            "id": 2,
+	            "name": "ice cream",
+	            "description": "Haagen Daz",
+	            "calories": 32
+	        }
+	    ]
 	}
