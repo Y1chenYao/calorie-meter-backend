@@ -123,7 +123,7 @@ def get_tags():
     """
     Endpoint for getting all tags
     """
-    return success_response({"tags": [t.simple_serialize() for t in Tag.query.all()]})
+    return success_response({"tags": [t.serialize() for t in Tag.query.all()]})
 
 
 @app.route("/tags/", methods=["POST"])
@@ -139,7 +139,7 @@ def create_tag():
     new_tag = Tag(name=body.get("name"), color=body.get("color"))
     db.session.add(new_tag)
     db.session.commit()
-    return success_response(new_tag.simple_serialize(), 201)
+    return success_response(new_tag.serialize(), 201)
 
 @app.route("/tags/<int:tag_id>/")
 def get_tag_by_id(tag_id):
@@ -149,7 +149,7 @@ def get_tag_by_id(tag_id):
     tag = Tag.query.filter_by(id=tag_id).first()
     if tag is None:
         return failure_response("Tag not exist")
-    return success_response(tag.simple_serialize())
+    return success_response(tag.serialize())
 
 @app.route("/foods/<int:food_id>/add/", methods=["POST"])
 def add_tag_to_food(food_id):
@@ -180,7 +180,7 @@ def delete_tag(tag_id):
         return failure_response("Tag not exist")
     db.session.delete(tag)
     db.session.commit()
-    return success_response(tag.simple_serialize())
+    return success_response(tag.serialize())
 
 
 if __name__ == "__main__":

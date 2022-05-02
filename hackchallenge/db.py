@@ -42,6 +42,17 @@ class Food(db.Model):
             "calories": self.calories,
             "tags": [c.simple_serialize() for c in self.tags]
         }
+    
+    def simple_serialize(self):
+        """
+        Simple serializes a food object
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "calories": self.calories,
+        }
 
 class Tag(db.Model):
     """
@@ -69,4 +80,15 @@ class Tag(db.Model):
             "id": self.id,
             "name": self.name,
             "color": self.color,
+        }
+
+    def serialize(self):
+        """
+        Simple serializes a Tag object
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "color": self.color,
+            "foods": [c.simple_serialize() for c in self.foods]
         }

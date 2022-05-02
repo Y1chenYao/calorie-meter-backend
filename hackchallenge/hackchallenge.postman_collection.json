@@ -229,7 +229,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/tags/1/",
+					"raw": "http://localhost:5000/tags/2/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -237,7 +237,7 @@
 					"port": "5000",
 					"path": [
 						"tags",
-						"1",
+						"2",
 						""
 					]
 				}
