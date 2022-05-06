@@ -15,7 +15,7 @@ app = Flask(__name__)
 # setup config
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_filename}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True 
+app.config["SQLALCHEMY_ECHO"] = True
 
 # initialize app
 db.init_app(app)
@@ -42,12 +42,14 @@ def hello_world():
     """
     return "Hello " + os.environ.get("NAME") + "!"
 
+
 @app.route("/foods/")
 def get_foods():
     """
     Endpoint for getting all foods
     """
     return success_response({"foods": [t.serialize() for t in Food.query.all()]})
+
 
 @app.route("/foods/", methods=["POST"])
 def create_food():
@@ -64,10 +66,12 @@ def create_food():
     if "calories" not in body or (not isinstance(body.get("calories"), int)) or (body.get("calories") < 0):
         return json.dumps({"error": "bad request: calories must be nonnegative integer"}), 400
 
-    new_food = Food(name=body.get("name"), description=body.get("description"), calories=body.get("calories"))
+    new_food = Food(name=body.get("name"), description=body.get(
+        "description"), calories=body.get("calories"))
     db.session.add(new_food)
     db.session.commit()
     return success_response(new_food.serialize(), 201)
+
 
 @app.route("/foods/<int:food_id>/")
 def get_food_by_id(food_id):
@@ -79,6 +83,7 @@ def get_food_by_id(food_id):
         return failure_response("Food not found")
     return success_response(food.serialize())
 
+
 @app.route("/foods/<food_name>/")
 def get_food_by_name(food_name):
     """
@@ -86,6 +91,7 @@ def get_food_by_name(food_name):
     Return a list of foods, since multiple entries can share the same name
     """
     return success_response({"foods": [t.serialize() for t in Food.query.filter_by(name=str(food_name))]})
+
 
 @app.route("/foods/<int:food_id>/", methods=["POST"])
 def update_food(food_id):
@@ -95,16 +101,17 @@ def update_food(food_id):
     body = json.loads(request.data)
     food = Food.query.filter_by(id=food_id).first()
     if food is None:
-        return failure_response("Food not find") 
+        return failure_response("Food not find")
     # if calories is nonempty and is not a nonnegative integer, return an error message
     if (body.get("calories") is not None) and ((not isinstance(body.get("calories"), int)) or (body.get("calories") < 0)):
         return json.dumps({"error": "bad request: calories must be nonnegative integer"}), 400
     # if user input is not specified, default to what it was previously
-    food.name = body.get("name", food.name) 
+    food.name = body.get("name", food.name)
     food.description = body.get("description", food.description)
     food.calories = body.get("calories", food.calories)
     db.session.commit()
     return success_response(food.serialize())
+
 
 @app.route("/foods/<int:food_id>/", methods=["DELETE"])
 def delete_food(food_id):
@@ -117,6 +124,7 @@ def delete_food(food_id):
     db.session.delete(food)
     db.session.commit()
     return success_response(food.serialize())
+
 
 @app.route("/tags/")
 def get_tags():
@@ -141,6 +149,7 @@ def create_tag():
     db.session.commit()
     return success_response(new_tag.serialize(), 201)
 
+
 @app.route("/tags/<int:tag_id>/")
 def get_tag_by_id(tag_id):
     """
@@ -151,6 +160,7 @@ def get_tag_by_id(tag_id):
         return failure_response("Tag not exist")
     return success_response(tag.serialize())
 
+
 @app.route("/tags/<tag_name>/")
 def get_tag_by_name(tag_name):
     """
@@ -160,6 +170,7 @@ def get_tag_by_name(tag_name):
     If exactly 1 tag is matched, return a LIST OF ONE ELEMENT
     """
     return success_response({"tags": [t.serialize() for t in Tag.query.filter_by(name=str(tag_name))]})
+
 
 @app.route("/foods/<int:food_id>/add/", methods=["POST"])
 def add_tag_to_food(food_id):
@@ -180,6 +191,7 @@ def add_tag_to_food(food_id):
     db.session.commit()
     return success_response(food.serialize())
 
+
 @app.route("/tags/<int:tag_id>/", methods=["DELETE"])
 def delete_tag(tag_id):
     """
@@ -191,6 +203,24 @@ def delete_tag(tag_id):
     db.session.delete(tag)
     db.session.commit()
     return success_response(tag.serialize())
+
+
+@app.route("/upload/", methods=["POST"])
+def upload():
+    """
+    Endpoint for uploading an image to AWS given its base64 form,
+    then storing/returning the URL of that image
+    """
+    body = json.loads(request.data)
+    image_data = body.get("image_data")
+    if image_data is None:
+        return failure_response("No base64 image to be found!")
+
+    # create new Asset object
+    asset = Asset(image_data=image_data)
+    db.session.add(asset)
+    db.session.commit()
+    return success_response(asset.serialize(), 201)
 
 
 if __name__ == "__main__":
