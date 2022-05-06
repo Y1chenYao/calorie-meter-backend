@@ -1,6 +1,6 @@
 version: '3'
 services:
   demo6:
-    image: yichenyao/pa6
+    image: yichenyao/calorie
     ports: 
       - "5000:5000"
