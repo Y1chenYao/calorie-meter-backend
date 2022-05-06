@@ -34,6 +34,7 @@ class Food(db.Model):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     calories = db.Column(db.Integer, nullable=False)
+    image_url = db.Column(db.String, nullable=False)
     tags = db.relationship(
         "Tag", secondary=association_table, back_populates="foods")
 
@@ -44,6 +45,7 @@ class Food(db.Model):
         self.name = kwargs.get("name")
         self.description = kwargs.get("description", "")
         self.calories = kwargs.get("calories", 0)
+        self.image_url = kwargs.get("image_url", "rice.jpeg")
 
     def serialize(self):
         """
@@ -54,7 +56,8 @@ class Food(db.Model):
             "name": self.name,
             "description": self.description,
             "calories": self.calories,
-            "tags": [c.simple_serialize() for c in self.tags]
+            "tags": [c.simple_serialize() for c in self.tags],
+            "image": self.image_url
         }
 
     def simple_serialize(self):
@@ -66,6 +69,7 @@ class Food(db.Model):
             "name": self.name,
             "description": self.description,
             "calories": self.calories,
+            "image": self.image_url
         }
 
 
@@ -109,8 +113,6 @@ class Tag(db.Model):
             "foods": [c.simple_serialize() for c in self.foods]
         }
 
-
-db = SQLAlchemy()
 
 EXTENSIONS = ["png", "gif", "jpg", "jpeg"]
 BASE_DIR = os.getcwd()

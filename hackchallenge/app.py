@@ -5,6 +5,7 @@ from db import Food
 from db import Tag
 from flask import Flask
 from flask import request
+from dotenv import dotenv_values
 
 import os
 
@@ -16,6 +17,9 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_filename}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
+
+
+S3_BUCKET_NAME = dotenv_values(".env")["S3_BUCKET_NAME"]
 
 # initialize app
 db.init_app(app)
@@ -67,7 +71,7 @@ def create_food():
         return json.dumps({"error": "bad request: calories must be nonnegative integer"}), 400
 
     new_food = Food(name=body.get("name"), description=body.get(
-        "description"), calories=body.get("calories"))
+        "description"), calories=body.get("calories"), image_url=body.get("image_url"))
     db.session.add(new_food)
     db.session.commit()
     return success_response(new_food.serialize(), 201)
@@ -109,8 +113,18 @@ def update_food(food_id):
     food.name = body.get("name", food.name)
     food.description = body.get("description", food.description)
     food.calories = body.get("calories", food.calories)
+    food.image_url = body.get("image_url", food.image_url)
     db.session.commit()
     return success_response(food.serialize())
+
+
+@app.route("/foods/getimage/<int:food_id>/")
+def get_food_image(food_id):
+    """
+    Endpoint for getting the image of a food by the id
+    """
+    food = Food.query.filter_by(id=food_id).first()
+    return success_response({"image_url": f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/rice.jpeg"})
 
 
 @app.route("/foods/<int:food_id>/", methods=["DELETE"])
