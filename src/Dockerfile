@@ -13,7 +13,7 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD python app.py
+CMD [ "python3", "app.py", "run", "--host=0.0.0.0"]
 # tells the computer how to run app
 
 

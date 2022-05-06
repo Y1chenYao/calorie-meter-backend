@@ -1,6 +1,6 @@
 __pycache__
 .venv/
-calorie.db
+*.db
 .env
 venv
 venv/

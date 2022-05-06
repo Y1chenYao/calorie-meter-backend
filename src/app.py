@@ -10,7 +10,7 @@ from dotenv import dotenv_values
 import os
 
 # define db filename
-db_filename = "foods.db"
+db_filename = "calorie.db"
 app = Flask(__name__)
 
 # setup config

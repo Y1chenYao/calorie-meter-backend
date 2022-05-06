@@ -1,7 +1,6 @@
 version: '3'
 services:
   demo6:
-    image: rl626/demo6
-    env_file: .env
+    image: yichenyao/pa6
     ports: 
       - "5000:5000"
