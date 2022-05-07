@@ -341,3 +341,22 @@ Response
             }
         ]
     }
+
+## Upload an image
+
+    POST /upload/
+
+Request:
+
+    {
+        "image_data" : "data:image/png;base64, <BASE64 ENCODING OF IMAGE>
+    }
+
+Response:
+
+Return the food after adding the tag.
+
+    <HTTP STATUS CODE 200>
+    {
+        "url": "https://hack-challenge.s3.us-east-1.amazonaws.com/1p06BPpjT6oQMiq6.png"
+    }
